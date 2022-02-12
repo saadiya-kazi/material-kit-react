@@ -5,6 +5,8 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import faker from "@faker-js/faker";
+import { DashboardLayout } from "../components/dashboard-layout";
+
 import {
   Box,
   Button,
@@ -24,36 +26,33 @@ const AddClassRoom = () => {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
-      email: "",
-      name: "",
+      class_room_name: "",
       // lastName: '',
-      password: "",
-      role: "member",
+
+      gym_id: 1,
       // policy: false,
     },
     validationSchema: Yup.object({
-      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      name: Yup.string().max(255).required("Name is required"),
+      //   email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
+      class_room_name: Yup.string().max(255).required("class room name is required"),
       // lastName: Yup
       //   .string()
       //   .max(255)
       //   .required(
-      //     'Last name is required'),
-      password: Yup.string().max(255).required("Password is required"),
+      //     'Last class_room_name is required'),
+      //   password: Yup.string().max(255).required("Password is required"),
       // policy: Yup.boolean().oneOf([true], "This field must be checked"),
     }),
     onSubmit: () => {
       console.log("formik values", formik.values);
       axios
-        .post("http://192.168.43.76/api/signup", {
+        .post("http://192.168.43.76/api/createClassRoom", {
           ...formik.values,
-          password_confirmation: formik.values.password,
-          mobile: faker.phone.phoneNumber(),
         })
         .then((res) => res.data)
         .then((data) => {
-          console.log("data login", JSON.stringify(data, null, 2));
-          data.success && router.push("/");
+          console.log("data classroom", JSON.stringify(data, null, 2));
+          data.success && router.push("/classrooms");
         });
       // router.push("/");
     },
@@ -62,7 +61,7 @@ const AddClassRoom = () => {
   return (
     <>
       <Head>
-        <title>Register </title>
+        <title>Add class room </title>
       </Head>
       <Box
         component="main"
@@ -82,69 +81,28 @@ const AddClassRoom = () => {
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography color="textPrimary" variant="h4">
-                Create a new account
-              </Typography>
-              <Typography color="textSecondary" gutterBottom variant="body2">
-                Use your email to create a new account
+                Add a class room
               </Typography>
             </Box>
             <TextField
-              error={Boolean(formik.touched.name && formik.errors.name)}
+              error={Boolean(formik.touched.class_room_name && formik.errors.class_room_name)}
               fullWidth
-              helperText={formik.touched.name && formik.errors.name}
+              helperText={formik.touched.class_room_name && formik.errors.class_room_name}
               label="ClassRoom Name"
               margin="normal"
-              name="name"
+              name="class_room_name"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.name}
-              variant="outlined"
-            />
-            {/* <TextField
-              error={Boolean(formik.touched.lastName && formik.errors.lastName)}
-              fullWidth
-              helperText={formik.touched.lastName && formik.errors.lastName}
-              label="Last Name"
-              margin="normal"
-              name="lastName"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.lastName}
-              variant="outlined"
-            /> */}
-            <TextField
-              error={Boolean(formik.touched.email && formik.errors.email)}
-              fullWidth
-              helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
-              margin="normal"
-              name="email"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="email"
-              value={formik.values.email}
-              variant="outlined"
-            />
-            <TextField
-              error={Boolean(formik.touched.password && formik.errors.password)}
-              fullWidth
-              helperText={formik.touched.password && formik.errors.password}
-              label="Password"
-              margin="normal"
-              name="password"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              type="password"
-              value={formik.values.password}
+              value={formik.values.class_room_name}
               variant="outlined"
             />
 
             <FormControl fullWidth variant="outlined">
               <InputLabel variant="standard">Gym</InputLabel>
               <NativeSelect
-                defaultValue={"member"}
+                defaultValue={1}
                 inputProps={{
-                  name: "role",
+                  name: "gym_id",
                   id: "uncontrolled-native",
                 }}
                 onChange={formik.handleChange}
@@ -163,7 +121,7 @@ const AddClassRoom = () => {
             >
               <Checkbox
                 checked={formik.values.policy}
-                name="policy"
+                class_room_name="policy"
                 onChange={formik.handleChange}
               />
               <Typography color="textSecondary" variant="body2">
@@ -196,5 +154,6 @@ const AddClassRoom = () => {
     </>
   );
 };
+AddClassRoom.getLayout = (page) => <DashboardLayout>{page}</DashboardLayout>;
 
 export default AddClassRoom;
