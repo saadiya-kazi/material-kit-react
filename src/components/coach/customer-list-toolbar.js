@@ -39,7 +39,7 @@ export const CustomerListToolbar = (props) => (
         >
           Export
         </Button> */}
-        <Button color="primary" variant="contained">
+        <Button onClick={props.openModal} color="primary" variant="contained">
           Add Coach
         </Button>
       </Box>

@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const Register = () => {
+const AddClassRoom = () => {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -92,7 +92,7 @@ const Register = () => {
               error={Boolean(formik.touched.name && formik.errors.name)}
               fullWidth
               helperText={formik.touched.name && formik.errors.name}
-              label="Name"
+              label="ClassRoom Name"
               margin="normal"
               name="name"
               onBlur={formik.handleBlur}
@@ -140,7 +140,7 @@ const Register = () => {
             />
 
             <FormControl fullWidth variant="outlined">
-              <InputLabel variant="standard">Role</InputLabel>
+              <InputLabel variant="standard">Gym</InputLabel>
               <NativeSelect
                 defaultValue={"member"}
                 inputProps={{
@@ -150,8 +150,8 @@ const Register = () => {
                 onChange={formik.handleChange}
               >
                 {/* <option value={"admin"}>Admin</option> */}
-                <option value={"coach"}>Coach</option>
-                <option value={"member"}>Member</option>
+                <option value={1}>fit45</option>
+                <option value={2}>fit33</option>
               </NativeSelect>
             </FormControl>
             {/* <Box
@@ -187,17 +187,9 @@ const Register = () => {
                 type="submit"
                 variant="contained"
               >
-                Sign Up Now
+                Add Class Room
               </Button>
             </Box>
-            <Typography color="textSecondary" variant="body2">
-              Have an account?{" "}
-              <NextLink href="/login" passHref>
-                <Link variant="subtitle2" underline="hover">
-                  Sign In
-                </Link>
-              </NextLink>
-            </Typography>
           </form>
         </Container>
       </Box>
@@ -205,4 +197,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default AddClassRoom;

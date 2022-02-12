@@ -23,6 +23,11 @@ const items = [
     title: "Classrooms",
   },
   {
+    href: "/addclassroom",
+    icon: <UserIcon fontSize="small" />,
+    title: "Add Class Room",
+  },
+  {
     href: "/coaches",
     icon: <UserIcon fontSize="small" />,
     title: "Coaches",

@@ -24,6 +24,7 @@
     "axios": "^0.25.0",
     "chart.js": "^3.5.1",
     "date-fns": "^2.25.0",
+    "faker": "^6.6.6",
     "formik": "^2.1.5",
     "history": "^5.0.0",
     "next": "^12.0.3-canary.7",
@@ -37,6 +38,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-alpha.6",
     "eslint": "^7.32.0",
     "eslint-config-next": "12.0.3-canary.7"
   }

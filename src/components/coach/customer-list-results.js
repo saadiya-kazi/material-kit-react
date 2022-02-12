@@ -1,4 +1,6 @@
 import { useState } from "react";
+import NextLink from "next/link";
+
 import PerfectScrollbar from "react-perfect-scrollbar";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
@@ -17,7 +19,7 @@ import {
 } from "@mui/material";
 import { getInitials } from "../../utils/get-initials";
 import DeleteIcon from "@mui/icons-material/Delete";
-
+import axios from "axios";
 export const CustomerListResults = ({ customers, ...rest }) => {
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -55,24 +57,6 @@ export const CustomerListResults = ({ customers, ...rest }) => {
     setSelectedCustomerIds(newSelectedCustomerIds);
   };
 
-  const deleteCoach = (event, id) => {
-    //  const selectedIndex = selectedCustomerIds.indexOf(id);
-    //  let newSelectedCustomerIds = [];
-    //  if (selectedIndex === -1) {
-    //    newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds, id);
-    //  } else if (selectedIndex === 0) {
-    //    newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(1));
-    //  } else if (selectedIndex === selectedCustomerIds.length - 1) {
-    //    newSelectedCustomerIds = newSelectedCustomerIds.concat(selectedCustomerIds.slice(0, -1));
-    //  } else if (selectedIndex > 0) {
-    //    newSelectedCustomerIds = newSelectedCustomerIds.concat(
-    //      selectedCustomerIds.slice(0, selectedIndex),
-    //      selectedCustomerIds.slice(selectedIndex + 1)
-    //    );
-    //  }
-    //  setSelectedCustomerIds(newSelectedCustomerIds);
-  };
-
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };
@@ -81,6 +65,22 @@ export const CustomerListResults = ({ customers, ...rest }) => {
     setPage(newPage);
   };
 
+  const deleteCoach = (event, id) => {
+    console.log("deleteCoach api", id);
+    axios
+      .delete(`http://192.168.43.76/api/deleteCoaches/${id}`)
+      .then((res) => res.data)
+      .then((data) => {
+        if (data === "") {
+          alert("Deleted Coach");
+          window.location.reload();
+          // <NextLink></NextLink>
+        }
+      })
+      .catch((err) => {
+        console.log("deleteCoach error", err);
+      });
+  };
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -143,7 +143,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                     </Box>
                   </TableCell>
                   <TableCell>{customer.email}</TableCell>
-                  <TableCell onChange={(event) => handleSelectOne(event, customer.id)}>
+                  <TableCell onClick={(event) => deleteCoach(event, customer.id)}>
                     <DeleteIcon />
                   </TableCell>
                   {/* <TableCell>

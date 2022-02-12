@@ -27,7 +27,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
     let newSelectedCustomerIds;
 
     if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
+      newSelectedCustomerIds = customers.map((customer) => customer.gym_id);
     } else {
       newSelectedCustomerIds = [];
     }
@@ -70,7 +70,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
+                {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedCustomerIds.length === customers.length}
                     color="primary"
@@ -80,10 +80,10 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                     }
                     onChange={handleSelectAll}
                   />
-                </TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Delete</TableCell>
+                </TableCell> */}
+                <TableCell>Gym Name</TableCell>
+                <TableCell>Class Room Name</TableCell>
+                {/* <TableCell>Delete</TableCell> */}
                 {/* <TableCell>
                   Location
                 </TableCell>
@@ -96,19 +96,19 @@ export const CustomerListResults = ({ customers, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {customers.slice(0, limit).map((customer) => (
+              {customers.map((customer) => (
                 <TableRow
                   hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                  key={customer.gym_id}
+                  selected={selectedCustomerIds.indexOf(customer.gym_id) !== -1}
                 >
-                  <TableCell padding="checkbox">
+                  {/* <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
+                      checked={selectedCustomerIds.indexOf(customer.gym_id) !== -1}
+                      onChange={(event) => handleSelectOne(event, customer.gym_id)}
                       value="true"
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <Box
                       sx={{
@@ -116,18 +116,15 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                         display: "flex",
                       }}
                     >
-                      <Avatar src={customer.avatarUrl} sx={{ mr: 2 }}>
-                        {getInitials(customer.name)}
-                      </Avatar>
                       <Typography color="textPrimary" variant="body1">
-                        {customer.name}
+                        {customer.gym_name}
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>{customer.email}</TableCell>
-                  <TableCell>
+                  <TableCell>{customer.name}</TableCell>
+                  {/* <TableCell>
                     <DeleteIcon />
-                  </TableCell>
+                  </TableCell> */}
                   {/* <TableCell>
                     {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
                   </TableCell>
