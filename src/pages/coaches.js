@@ -36,6 +36,7 @@ class Coaches extends React.Component {
       open: false,
     });
   };
+  addToCoach = () => {};
   render() {
     return (
       <>

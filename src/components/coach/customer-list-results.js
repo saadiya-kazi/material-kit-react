@@ -101,6 +101,8 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                 </TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Email</TableCell>
+                <TableCell>Gym Name</TableCell>
+
                 <TableCell>Delete</TableCell>
                 {/* <TableCell>
                   Location
@@ -143,6 +145,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                     </Box>
                   </TableCell>
                   <TableCell>{customer.email}</TableCell>
+                  <TableCell>{customer.gym_name}</TableCell>
                   <TableCell onClick={(event) => deleteCoach(event, customer.id)}>
                     <DeleteIcon />
                   </TableCell>

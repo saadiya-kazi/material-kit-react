@@ -25,9 +25,19 @@ import { useState, useEffect } from "react";
 
 const AddClassRoom = () => {
   const router = useRouter();
+  const [coaches, setCoaches] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://192.168.43.76/api/getUserList")
+      .then((res) => res.data)
+      .then((data) => {
+        console.log("data coach", JSON.stringify(data, null, 2));
+        setCoaches(data.data);
+      });
+  }, []);
   const formik = useFormik({
     initialValues: {
-      class_room_name: "",
+      user_id: 0,
       // lastName: '',
 
       gym_id: 1,
@@ -35,7 +45,7 @@ const AddClassRoom = () => {
     },
     validationSchema: Yup.object({
       //   email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
-      class_room_name: Yup.string().max(255).required("class room name is required"),
+      // class_room_name: Yup.string().max(255).required("class room name is required"),
       // lastName: Yup
       //   .string()
       //   .max(255)
@@ -47,28 +57,19 @@ const AddClassRoom = () => {
     onSubmit: () => {
       console.log("formik values", formik.values);
       axios
-        .post("http://192.168.43.76/api/create", {
-          ...formik.values,
+        .post("http://192.168.43.76/api/createCoaches", {
+          user_id: parseInt(formik.values.id),
+          gym_id: formik.values.gym_id,
         })
         .then((res) => res.data)
         .then((data) => {
-          console.log("data classroom", JSON.stringify(data, null, 2));
+          console.log("data coaches list", JSON.stringify(data, null, 2));
           data.success && router.push("/coaches");
         });
       // router.push("/");
     },
   });
-  const [coaches, setCoaches] = useState([]);
-  useEffect(() => {
-    // Your code here
-    axios
-      .get("http://192.168.43.76/api/getUserList", {})
-      .then((res) => res.data)
-      .then((data) => {
-        console.log("data coach", JSON.stringify(data, null, 2));
-        setCoaches(data.data);
-      });
-  }, [coaches]);
+
   return (
     <>
       <Head>
@@ -96,20 +97,20 @@ const AddClassRoom = () => {
               </Typography>
             </Box>
             <FormControl fullWidth variant="outlined">
-              <InputLabel variant="standard">Coach Name</InputLabel>
+              <InputLabel variant="standard">User Name</InputLabel>
               <NativeSelect
                 defaultValue={1}
                 inputProps={{
-                  name: "user_id",
+                  name: "id",
                   id: "uncontrolled-native",
                 }}
                 onChange={formik.handleChange}
               >
-                {/* {coaches.map(coach => 
-                    <option value={co}>fit45</option>
-                
-                  
-                  )} */}
+                {coaches.map((coach) => (
+                  <option key={coach.id} value={coach.id}>
+                    {coach.name}
+                  </option>
+                ))}
               </NativeSelect>
             </FormControl>
 
