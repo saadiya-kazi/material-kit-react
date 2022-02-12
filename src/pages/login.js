@@ -7,7 +7,7 @@ import { Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Facebook as FacebookIcon } from "../icons/facebook";
 import { Google as GoogleIcon } from "../icons/google";
-
+import axios from "axios";
 const Login = () => {
   const router = useRouter();
   const formik = useFormik({
@@ -20,7 +20,14 @@ const Login = () => {
       password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: () => {
-      console.log("formik values", formik.values);
+      console.log("formik values hello", formik.values);
+      axios
+        .post("http://192.168.43.76/api/signin", formik.values)
+        .then((res) => res.data)
+        .then((data) => {
+          console.log("data login", JSON.stringify(data, null, 2));
+          data.success && router.push("/");
+        });
       // router.push("/");
     },
   });
@@ -28,7 +35,7 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Login | hackathon_TicketingSystem</title>
+        <title>Login |FlexGym</title>
       </Head>
       <Box
         component="main"

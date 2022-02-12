@@ -43,6 +43,17 @@ const Register = () => {
     }),
     onSubmit: () => {
       console.log("formik values", formik.values);
+      axios
+        .post("http://192.168.43.76/api/signup", {
+          ...formik.values,
+          password_confirmation: formik.values.password,
+          mobile: "67613407",
+        })
+        .then((res) => res.data)
+        .then((data) => {
+          console.log("data login", JSON.stringify(data, null, 2));
+          data.success && router.push("/");
+        });
       // router.push("/");
     },
   });
